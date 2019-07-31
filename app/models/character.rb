@@ -8,8 +8,9 @@ class Character < ApplicationRecord
     end
 
     # def self.queryAllCharacters
-    #     url = "https://superheroapi.com/api/#{ENV['SUPER_HERO_KEY']}/1"
+    #     url = "https://superheroapi.com/api/#{ENV['SUPER_HERO_KEY']}/id"
     #     json = JSON.parse(RestClient.get url, {content_type: :json, accept: :json})
+    #     end
     # end
         
 end
