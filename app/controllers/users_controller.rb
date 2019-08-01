@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    skip_before_action :authorized, only: [:create]
+    skip_before_action :authorized, only: [:create, :profile]
 
     def index
         @users = User.all
@@ -7,7 +7,13 @@ class UsersController < ApplicationController
     end
 
     def profile
-        render json: { user: UserSerializer.new(current_user) }, status: :accepted
+      @user = User.find_by(username: user_params[:username])
+      if @user && @user.authenticate(user_params[:password])
+        token = encode_token({ user_id: @user.id })
+        render json: { user: @user.id, jwt:token }, status: :accepted
+      else
+        render json: { message: 'Invalid username or password' }, status: :unauthorized
+      end
     end
 
     def create
